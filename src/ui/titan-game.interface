@@ -5950,6 +5950,4 @@
 
 	<!-- loading dialog, sits above everything if used -->
 	<instance name="simple_loading_dialog" />
-
-	<instance name="streammessage" />
 </interface>
