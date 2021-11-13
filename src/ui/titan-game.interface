@@ -5947,7 +5947,4 @@
 	<!-- Client Info -->
 	<include file="/ui/game_clientinfo.package" />
 	<instance name="game_clientinfo" />
-
-	<!-- loading dialog, sits above everything if used -->
-	<instance name="simple_loading_dialog" />
 </interface>
