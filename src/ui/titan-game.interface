@@ -5952,8 +5952,4 @@
 	<instance name="simple_loading_dialog" />
 
 	<instance name="streammessage" />
-
-
-	<!-- one time advertisment to switch to retro interface, only shows during the 8bit event, never shows again after first reveal -->
-	<!-- <include file="pkg_retro_advert.package" /> -->
 </interface>
