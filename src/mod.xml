@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification
+    application="Heroes of Newerth"
+    appversion="*"
+    mmversion="1.0"
+    name="Titan UI"
+    version="1.1"
+    description="TODO"
+    author="Wiggy boy"
+
+    weblink=""
+    updatecheckurl=""
+    updatedownloadurl=""
+>
+    <!-- Add to Game Overlay Options -->
+	<editfile name="ui/fe2/game_options.package">
+        <find><![CDATA[title="options_dropdown_overlayselect"
+								maxlistheight="6"
+								populate="]]></find>
+        <insert position="after"><![CDATA[
+									AddTemplateListItem('Ncombobox_item', '/ui/titan-game.interface', 'label', 'options_interface_titan');]]></insert>
+    </editfile>
+
+    <!-- Copy over Titan UI -->
+	<copyfile name="ui/titan-game.interface"/>
+
+</modification>
