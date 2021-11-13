@@ -10,7 +10,7 @@
 	<!-- Search for 'UIScript' to find stuff that still needs to be replaced with LUA, also probably search for UICmd -->
 
 	<lua file="/ui/scripts/game_ui_manager.lua" />
-	<lua file="/ui/scripts/game_new.lua" />
+	<lua file="/ui/titan-game.lua" />
 
 	<panel name="lod_game_unload_delay" noclick="1" onloadlua="RegisterScript2('Game_Interface', '39') Game:InitializeGameInterface()"/>
 
