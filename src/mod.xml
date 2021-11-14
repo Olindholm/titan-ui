@@ -24,5 +24,7 @@
     <!-- Copy over Titan UI -->
 	<copyfile name="ui/titan-game.interface"/>
 	<copyfile name="ui/titan-game.lua"/>
+	<copyfile name="ui/titan-minimap.interface"/>
+	<copyfile name="ui/titan-minimap.lua"/>
 
 </modification>
