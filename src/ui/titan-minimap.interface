@@ -4,9 +4,9 @@
 	<lua file="/ui/titan-minimap.lua"/>
 
     <!-- Interface -->
-    <panel name="mini_map_left" group="game_mini_map" visible="true" width="29.8h" height="29.8h" align="left" valign="bottom" noclick="true">
+    <panel name="minimap_panel_left" group="game_mini_map" visible="true" width="29.8h" height="29.8h" align="left" valign="bottom" noclick="true">
 		<panel x="0.5h" y="-0.5h" width="23.2h" height="23.2h" align="left" valign="bottom" clip="true">
-			<map hoversize="0.5" outlinesize="0.19h" width="23.2h" height="23.2h" name="minimap" texture="!minimap_texture" watch="Minimap" onclick="If(MinimapClick(param0, param1), BreakDrag());" onrightclick="If(MinimapRightClick(param0, param1), BreakDrag());"/>
+			<map hoversize="0.5" outlinesize="0.19h" width="23.2h" height="23.2h" name="minimap_left" texture="!minimap_texture" watch="Minimap" onclick="If(MinimapClick(param0, param1), BreakDrag());" onrightclick="If(MinimapRightClick(param0, param1), BreakDrag());"/>
 		</panel>
 		<image texture="/ui/common/bot_left.tga" valign="bottom" noclick="1"/>
 		<panel color="invisible" x="0.35h" y="4.6h" height="2.1h" width="2.1h" >
@@ -30,11 +30,11 @@
 	</panel>
 
 	<!-- Map Right (Alt View) -->
-	<panel name="mini_map_right" group="game_mini_map" visible="false" width="29.8h" height="29.8h" align="right" valign="bottom" noclick="true">
+	<panel name="minimap_panel_right" group="game_mini_map" visible="false" width="29.8h" height="29.8h" align="right" valign="bottom" noclick="true">
 		<panel x="-0.5h" y="-0.5h" width="23.2h" height="23.2h" align="right" valign="bottom" clip="true">
-			<map hoversize="0.5" outlinesize="0.19h" width="23.2h" height="23.2h" name="minimap_altview" texture="!minimap_texture" watch="Minimap" onclick="If(MinimapClick(param0, param1), BreakDrag());" onrightclick="If(MinimapRightClick(param0, param1), BreakDrag());"/>
+			<map hoversize="0.5" outlinesize="0.19h" width="23.2h" height="23.2h" name="minimap_right" texture="!minimap_texture" watch="Minimap" onclick="If(MinimapClick(param0, param1), BreakDrag());" onrightclick="If(MinimapRightClick(param0, param1), BreakDrag());"/>
 		</panel>
-		<image hflip="1" texture="/ui/common/bot_left.tga" valign="bottom" noclick="1"/>
+		<image name="h_flip_test_back" hflip="1" texture="/ui/common/bot_left.tga" valign="bottom" noclick="1"/>
 		<panel color="invisible" x="-0.35h" y="4.6h" align="right" height="2.1h" width="2.1h" >
 			<button noclick="1" cvar="cg_unitPlayerColors" numstates="2" color="invisible" interactive="false">
 				<widgetstate statename="up" >

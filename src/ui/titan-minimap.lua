@@ -1,50 +1,64 @@
 local interface = object
 local interfaceName = interface:GetName()
 
--- Health
-local function ActiveHealth1324(sourceWidget, health, maxHealth, healthPercent, healthShadow)
-    println('titan-minimap: health = ' .. health )
-end
-interface:RegisterWatch('ActiveHealth', ActiveHealth1324)
-
-----------------------------------------------------------
--- 					Bottom Section						--
-----------------------------------------------------------
-local mini_map_right = nil
-
-local function PositionBottomSection()
-    mini_map_right = interface:GetWidget('mini_map_right')
-
-    if (not GetCvarBool('ui_minimap_rightside')) then		-- Minimap on left
-        interface:GetWidget('mini_map_right'):SetVisible(false)
-        interface:GetWidget('mini_map_left'):SetVisible(true)
+local function GetSide()
+    if GetCvarBool('ui_minimap_rightside') then
+        return 'right'
     else
-        interface:GetWidget('mini_map_right'):SetVisible(true)
-        interface:GetWidget('mini_map_left'):SetVisible(false)
+        return 'left'
     end
 end
-interface:RegisterWatch('MiniMapPosition', PositionBottomSection)
 
-Game.mapEffect = {}
-local function MapEffect(sourceWidget, param0, param1, param2, param3, param4, param5, param6, param7)
+local function GetOppositeSide()
+    if not GetCvarBool('ui_minimap_rightside') then
+        return 'right'
+    else
+        return 'left'
+    end
+end
+
+--
+-- Minimap ( Left / Right )
+--
+
+local function ShowCorrectMinimap()
+    interface:GetWidget('minimap_panel_' .. GetSide()):SetVisible(true)
+    interface:GetWidget('minimap_panel_' .. GetOppositeSide()):SetVisible(false)
+end
+interface:RegisterWatch('MiniMapPosition', ShowCorrectMinimap)
+
+--
+-- Minimap Effects (Pings)
+--
+
+local pingLimit = 3
+local pingCooldown = 5000 -- ms
+local mapEffect = {}
+
+local function ShowMinimapPing(effect, x, y, color)
+    local minimap = 'minimap_' .. GetSide()
+    local pingEffectCmd =   "StartEffect('" .. effect .. "', " ..
+                                "GetMinimapDrawX('" .. minimap .. "', '" .. x .. "') / GetScreenWidth(), " ..
+                                "GetMinimapDrawY('" .. minimap .. "', 1.0 - " .. y .. ") / GetScreenHeight(), " ..
+                                "'" .. color .. "', " ..
+                                "GetMinimapDrawX('" .. minimap .. "', '" .. x .. "') / GetScreenWidth(), " ..
+                                "GetMinimapDrawY('" .. minimap .. "', 1.0 - " .. y .. ") / GetScreenHeight()" ..
+                            ")"
+
+    interface:GetWidget('effect_panel'):UICmd(pingEffectCmd)
+end
+
+local function MapEffect(sourceWidget, effect, x, y, color, source, param5, param6, param7)
 	local effect_panel = interface:GetWidget('effect_panel')
-	Game.mapEffect[param3] = Game.mapEffect[param3] or {}
-
-	local function DoPing()
-		if interface:GetWidget('minimap'):IsVisible() then
-			effect_panel:UICmd([[StartEffect(']]..param0..[[', GetMinimapDrawX('minimap', ']]..param1..[[') 			/ GetScreenWidth(), 	GetMinimapDrawY('minimap', 1.0 - ]]..param2..[[) 			/ GetScreenHeight(), ']]..param3..[[', GetMinimapDrawX('minimap', ']]..param5..[[') 			/ GetScreenWidth(), 	GetMinimapDrawY('minimap', 1.0 - ]]..param6..[[) 			/ GetScreenHeight())]])
-		else
-			effect_panel:UICmd([[StartEffect(']]..param0..[[', GetMinimapDrawX('minimap_altview', ']]..param1..[[') 	/ GetScreenWidth(), 	GetMinimapDrawY('minimap_altview', 1.0 - ]]..param2..[[) 	/ GetScreenHeight(), ']]..param3..[[', GetMinimapDrawX('minimap_altview', ']]..param5..[[') 	/ GetScreenWidth(), 	GetMinimapDrawY('minimap_altview', 1.0 - ]]..param6..[[) 	/ GetScreenHeight())]])
-		end
-		Game.mapEffect[param3].hostTime = HostTime()
-	end
+	mapEffect[color] = mapEffect[color] or {}
 
 	local clientNum = -1
 	local is_player_muted = false
-	local player_name = StripClanTag(param4)
+	local player_name = StripClanTag(source)
 
-	if (Game.playerNameToClient) and (Game.playerNameToClient[player_name]) then
-		clientNum = Game.playerNameToClient[player_name]
+    println(Game.sourceToClient)
+	if (Game.sourceToClient) and (Game.sourceToClient[player_name]) then
+		clientNum = Game.sourceToClient[player_name]
 	end
 
 	if clientNum ~= -1 then
@@ -53,17 +67,24 @@ local function MapEffect(sourceWidget, param0, param1, param2, param3, param4, p
 
 	-- Proceed with regular map ping logic if the player is not ignored and if the player is not muted
 	if (param7 == "false" and is_player_muted == false) then
-		if (not Game.mapEffect[param3].hostTime) or (not Game.mapEffect[param3].numPings) or ( (HostTime() - Game.mapEffect[param3].hostTime) > 5000) then
-			Game.mapEffect[param3].numPings = 1
-			DoPing()
-		elseif	((Game.mapEffect[param3].numPings < 3) or GetCvarBool("ui_unlimitedPings")) then
-			DoPing()
-			Game.mapEffect[param3].numPings = Game.mapEffect[param3].numPings + 1
+		if (not mapEffect[color].hostTime) or (not mapEffect[color].numPings) or ( (HostTime() - mapEffect[color].hostTime) > pingCooldown) then
+			mapEffect[color].numPings = 1
+            ShowMinimapPing(effect, x, y, color)
+            mapEffect[color].hostTime = HostTime()
+		elseif	((mapEffect[color].numPings < pingLimit) or GetCvarBool("ui_unlimitedPings")) then
+            ShowMinimapPing(effect, x, y, color)
+			mapEffect[color].numPings = mapEffect[color].numPings + 1
+            mapEffect[color].hostTime = HostTime()
 		end
 	end
+
+    println(mapEffect[color].numPings)
 end
 interface:RegisterWatch('MapEffect', MapEffect)
 
+-- This must be placed at the end to
+-- be able to "use" all functions.
+-- It must also be global (aka not local)
 function Init()
-    PositionBottomSection()
+    ShowCorrectMinimap()
 end
