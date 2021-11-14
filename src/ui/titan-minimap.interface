@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface name="titan_minimap" onloadlua="Init()">
+<interface name="titan_minimap" onloadlua="Minimap:Init()">
     <!-- Lua -->
 	<lua file="/ui/titan-minimap.lua"/>
 
