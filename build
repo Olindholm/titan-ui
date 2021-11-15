@@ -1,0 +1,20 @@
+# /bin/bash
+
+# Make sure we're in workdir
+cd $(dirname "$BASH_SOURCE")
+
+# This will ensure if any of sub-shells fail,
+# this shell will fail too (thus not continue).
+set -e
+
+# Build
+OUTPUT_FILE=$(pwd)/titan-ui.honmod
+
+# Remove previous file
+rm $OUTPUT_FILE
+
+# Zip new file
+# https://superuser.com/a/898496
+cd src
+zip -9yr $OUTPUT_FILE .
+cd ..
