@@ -67,7 +67,7 @@ local function MapEffect(sourceWidget, effect, x, y, color, playerName, param5, 
     if (mapEffects[color].numPings < GetPingLimit()) then
 	    if (showMinimapPing) then ShowMinimapPing(effect, x, y, color) end
 
-        mapEffects[color].hostTime = HostTime()
+        mapEffects[color].hostTime = time
         mapEffects[color].numPings = mapEffects[color].numPings + 1
     end
 end
