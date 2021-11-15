@@ -45,38 +45,31 @@ local function ShowMinimapPing(effect, x, y, color)
     interface:GetWidget('effect_panel'):UICmd(pingEffectCmd)
 end
 
-local function MapEffect(sourceWidget, effect, x, y, color, source, param5, param6, param7)
+local function MapEffect(sourceWidget, effect, x, y, color, playerName, param5, param6, playerIsChatMuted)
 	mapEffects[color] = mapEffects[color] or { numPings = 0, hostTime = 0 }
 
-	local clientNum = -1
-	local is_player_muted = false
-	local player_name = StripClanTag(source)
+    playerIsChatMuted = AtoB(playerIsChatMuted) -- Convert from str to bool
+    playerIsVoiceMuted = IsPlayerVoiceMuted(playerName)
 
-	if (Game.playerNameToClient) and (Game.playerNameToClient[player_name]) then
-		clientNum = Game.playerNameToClient[player_name]
-	end
-
-	if clientNum ~= -1 then
-		is_player_muted = AtoB(UIManager.GetActiveInterface():UICmd([[IsVoiceMuted(']] .. clientNum .. [[')]]))
-	end
+    -- Determine whether or not to show the ping
+    -- depending on whether the player is muted or not
+    showMinimapPing = not playerIsChatMuted and not playerIsVoiceMuted
 
 	-- Proceed with regular map ping logic if the player is not ignored and if the player is not muted
     local time = HostTime()
-	if (param7 == "false" and is_player_muted == false) then
 
-        -- If ping cooldown is over, reset numPings
-        if ( (time - mapEffects[color].hostTime) > pingCooldown) then
-			mapEffects[color].numPings = 0
-        end
+    -- If ping cooldown is over, reset numPings
+    if ( (time - mapEffects[color].hostTime) > pingCooldown) then
+        mapEffects[color].numPings = 0
+    end
 
-        -- If limit not reached, ping!
-        if (mapEffects[color].numPings < GetPingLimit()) then
-            ShowMinimapPing(effect, x, y, color)
+    -- If limit not reached, ping!
+    if (mapEffects[color].numPings < GetPingLimit()) then
+	    if (showMinimapPing) then ShowMinimapPing(effect, x, y, color) end
 
-            mapEffects[color].hostTime = HostTime()
-            mapEffects[color].numPings = mapEffects[color].numPings + 1
-        end
-	end
+        mapEffects[color].hostTime = HostTime()
+        mapEffects[color].numPings = mapEffects[color].numPings + 1
+    end
 end
 interface:RegisterWatch('MapEffect', MapEffect)
 
