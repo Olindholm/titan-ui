@@ -1,0 +1,14 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "$(wrench) Build",
+            "type": "shell",
+            "command": "./build",
+            "args": [],
+            "presentation": {
+                "clear": true
+            }
+        }
+    ]
+}
