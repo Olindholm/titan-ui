@@ -26,9 +26,9 @@ if not Base then
         end
     end
 
-    local function StripClanTag(playerName)
+    function StripClanTag(playerName)
         if (string.find(playerName, ']')) then
-            playerName = string.sub(stringVar, string.find(playerName, ']') + 1)
+            playerName = string.sub(playerName, string.find(playerName, ']') + 1)
         end
         return playerName
     end
