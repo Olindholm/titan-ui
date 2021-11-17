@@ -29,10 +29,20 @@ local function GetPingLimit()
     return 3
 end
 
+local function ShowChatMutedPlayersPings()
+    return false --GetCvarBool("show_chat_muted_players_pings")
+end
+
+local function ShowVoiceMutedPlayersPings()
+    println("ShowVoiceMutedPlayersPings")
+    println(GetCvarBool("show_voice_muted_players_pings"))
+    println("")
+
+    return GetCvarBool("show_voice_muted_players_pings")
+end
+
 local pingCooldown = 5000 -- ms
 local mapEffects = {}
-local showChatMutedPlayersPings = false
-local showVoiceMutedPlayersPings = false
 
 local function ShowMinimapPing(effect, x, y, color)
     local minimap = 'minimap_' .. GetSide()
@@ -55,8 +65,8 @@ local function MapEffect(sourceWidget, effect, x, y, color, playerName, param5, 
 
     -- Determine whether or not to show the ping
     -- depending on whether the player is muted or not
-    showMinimapPing = (showChatMutedPlayersPings or not playerIsChatMuted) and
-                     (showVoiceMutedPlayersPings or not playerIsVoiceMuted)
+    showMinimapPing = (ShowChatMutedPlayersPings() or not playerIsChatMuted) and
+                     (ShowVoiceMutedPlayersPings() or not playerIsVoiceMuted)
 
 	-- Proceed with regular map ping logic if the player is not ignored and if the player is not muted
     local time = HostTime()

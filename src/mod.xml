@@ -21,6 +21,14 @@
 									AddTemplateListItem('Ncombobox_item', '/ui/titan-game.interface', 'label', 'options_interface_titan');]]></insert>
     </editfile>
 
+    <!-- Add Titan UI Options -->
+	<copyfile name="ui/titan_options.package"/>
+    <editfile name="ui/mod_options_elements.package">
+        <find><![CDATA[<!-- INSERT AFTER THIS -->]]></find>
+        <insert position="after"><![CDATA[
+    <include file="/ui/titan_options.package"/>]]></insert>
+    </editfile>
+
     <!-- Copy over Titan UI -->
 	<copyfile name="ui/base.lua"/>
 	<copyfile name="ui/titan-game.interface"/>

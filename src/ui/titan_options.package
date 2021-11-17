@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package>
+
+	<instance
+		name="mod_options"
+		mod_id="titan_options"
+		mod_name="Titan UI"
+	/>
+	<instance
+		name="mod_header"
+		mod_id="titan_options"
+		label="Minimap Options"
+	/>
+    <!--
+	<instance
+		mod_id="titan_options"
+		name="mod_checkbox"
+		cvar="show_chat_muted_players_pings"
+		default="false"
+		label="Show chat muted players pings"
+	/>
+    -->
+	<instance
+		mod_id="titan_options"
+		name="mod_checkbox"
+		cvar="show_voice_muted_players_pings"
+		default="false"
+		label="Show voice muted players pings"
+	/>
+</package>
