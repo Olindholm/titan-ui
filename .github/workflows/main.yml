@@ -16,9 +16,9 @@ jobs:
         uses: tj-actions/changed-files@v11.7
         with:
           files: |
-          \.xml
-          \.interface
-          \.package
+            \.xml
+            \.interface
+            \.package
 
       - name: List all modified XML files
         run: |
