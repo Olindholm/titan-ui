@@ -1,0 +1,27 @@
+name: Continuous Integration Workflow
+on: [push]
+
+jobs:
+  validate-xml:
+    name: Validate XML
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup work directory
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
+
+      - name: Check for changed XML files
+        id: changed-xml-files
+        uses: tj-actions/changed-files@v11.7
+        with:
+          files: |
+          \.xml
+          \.interface
+          \.package
+
+      - name: List all modified XML files
+        run: |
+          for file in ${{ steps.changed-xml-files.outputs.all_modified_files }}; do
+            echo "$file was modified"
+          done
