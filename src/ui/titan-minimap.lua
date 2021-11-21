@@ -34,10 +34,6 @@ local function ShowChatMutedPlayersPings()
 end
 
 local function ShowVoiceMutedPlayersPings()
-    println("ShowVoiceMutedPlayersPings")
-    println(GetCvarBool("show_voice_muted_players_pings"))
-    println("")
-
     return GetCvarBool("show_voice_muted_players_pings")
 end
 
