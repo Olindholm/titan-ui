@@ -33,6 +33,8 @@
 	<copyfile name="ui/base.lua"/>
 	<copyfile name="ui/titan-game.interface"/>
 	<copyfile name="ui/titan-game.lua"/>
+	<copyfile name="ui/base_shop.interface"/>
+	<copyfile name="ui/base_shop.lua"/>
 	<copyfile name="ui/titan-minimap.interface"/>
 	<copyfile name="ui/titan-minimap.lua"/>
 	<copyfile name="ui/titan-minimap.tga"/>

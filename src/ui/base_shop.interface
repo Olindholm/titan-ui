@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface name="shop" onloadlua="Shop:Init()">
+    <!-- Lua -->
+	<lua file="/ui/base_shop.lua"/>
+
+    <!-- Interface -->
+    <trigger name="ShopInterface"/>
+
+</interface>

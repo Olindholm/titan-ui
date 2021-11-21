@@ -3698,7 +3698,7 @@
 	<instance name="ebuff_movf_group" x1="-12h" y1="-14.6h" x2="12h" y2="-19.8h" />
 
 	<!-- Shop / Obsv -->
-	<childinterface file="game_shop_v3.interface" />
+	<childinterface file="base_shop.interface" />
 	<!-- Doesn't exist yet
 		<include file="game_observatory.package"/>
 	-->

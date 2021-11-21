@@ -6,6 +6,8 @@
 		mod_id="titan_options"
 		mod_name="Titan UI"
 	/>
+
+    <!-- Minimap -->
 	<instance
 		name="mod_header"
 		mod_id="titan_options"
@@ -27,4 +29,28 @@
 		default="false"
 		label="Show voice muted players pings"
 	/>
+
+    <!-- Shop -->
+	<instance
+		name="mod_header"
+		mod_id="titan_options"
+		label="Shop Options"
+	/>
+	<instance
+		mod_id="titan_options"
+		name="mod_dropdown"
+		cvar="shop_interface"
+        cvartype="string"
+        trigger="ShopInterface"
+		label="Shop"
+	/>
+	<instance
+		mod_id="titan_options"
+		name="mod_dropdown_additem"
+		label="Classic Shop"
+		value="/ui/game_shop_v3.interface"
+	/>
+    <!-- Start of custom shops -->
+    <!-- End of custom shops -->
+
 </package>
