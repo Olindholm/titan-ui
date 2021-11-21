@@ -11,7 +11,7 @@ set -e
 OUTPUT_FILE=$(pwd)/titan-ui.honmod
 
 # Remove previous file
-rm $OUTPUT_FILE
+rm -f $OUTPUT_FILE
 
 # Zip new file
 # https://superuser.com/a/898496
